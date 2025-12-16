@@ -1,0 +1,27 @@
+# 工作流名称（GitHub Actions 页面显示）
+name: 测试 Bats 版本输出
+
+# 触发条件：代码推送到任意分支时自动运行
+on: [push]
+
+# 定义工作任务
+jobs:
+  test-bats-install:
+    # 运行环境：最新版 Ubuntu 服务器
+    runs-on: ubuntu-latest
+
+    # 具体执行步骤
+    steps:
+      # 步骤 1：签出推送的代码（必须，否则无法访问仓库文件）
+      - name: 签出代码
+        uses: actions/checkout@v4
+
+      # 步骤 2：安装 bats 测试框架
+      - name: 安装 Bats
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bats
+
+      # 步骤 3：输出版本号（验证安装成功）
+      - name: 运行 bats -v 命令
+        run: bats -v
